@@ -3,24 +3,40 @@
 @section('title', 'Projects')
 
 @section('content')
+  <div>
+    <span class="title is-1">
+      {{ $project->title }}
+    </span>
+    
+    <a href="/projects/{{ $project->id }}/edit" class="is-pulled-right">
+      <span class="icon is-small"><i class="fas fa-fw fa-edit"></i></span>
+    </a>
+  </div>
+  
+  <hr>
 
-  <h1>{{ $project->title }}</h1>
-  <p>{{ $project->description }}</p>
+  <p class="subtitle has-text-grey">
+    {{ $project->description }}
+  </p>
+  
+  <hr>
   
   @if ($project->tasks->count())
     <ul>
       @foreach($project->tasks as $task)
         <li>
-          <label for="completed">
-            <input type="checkbox" name="completed" {{ $task->completed == 1 ? 'checked' : '' }}>
-            {{ $task->title }}
-          </label>
+          <form action="/tasks/{{ $task->id }}" method="post">
+            @csrf
+            @method('PATCH')
+            <label for="completed">
+              <input type="checkbox" name="completed" onChange="this.form.submit()" {{ $task->completed == 1 ? 'checked' : '' }}>
+              {{ $task->title }}
+            </label>
+          </form>
         </li>
       @endforeach
     </ul>
   @endif
   
-  <a href="{{ route('projects.edit', ['project' => $project]) }}">
-    Edit
-  </a>
+  
 @endsection

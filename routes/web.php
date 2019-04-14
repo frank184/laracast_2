@@ -31,3 +31,4 @@ Route::get('/', function () {
 // Route::put('/projects', 'ProjectsController@update');
 // Route::delete('/projects', 'ProjectsController@destroy');
 Route::resource('/projects', 'ProjectsController');
+Route::patch('/tasks/{task}', 'TasksController@update');

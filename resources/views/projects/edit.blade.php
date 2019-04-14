@@ -3,42 +3,52 @@
 @section('title', 'New Project')
 
 @section('content')
-  <h1>Edit Project</h1>
-  
-  <form action="{{ route('projects.update', ['project' => $project]) }}" method="post">
-    @csrf
-    @method('PUT')
-    
-    @if ($errors->any())
-      <div class="errors">
-        <ul>
-          @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
-    
-    <div class="form-group">
-      <label for="title"></label>
-      <input type="text" name="title" placeholder="Enter a title" value="{{ $project->title }}" required>
+  <h1 class="title is-1">
+    Edit Project
+    <span class="subtitle has-text-grey">
+      Edit an existing project
+    </span>
+  </h1>
+
+  <div class="columns">
+    <div class="column">
+      <form action="/projects/{{ $project->id }}" method="post"  style="display:inline;">
+        @csrf
+        @method('PUT')
+        
+        @if ($errors->any())
+          <div class="errors">
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+        
+        <div class="field">
+          <label for="title" class="label">Title</label>
+          <div class="control">
+            <input type="text" class="input" name="title" placeholder="Enter a title" value="{{ $project->title }}" required>
+          </div>
+        </div>
+        
+        <div class="field">
+          <label for="description" class="label">Description</label>
+          <div class="control">
+            <textarea name="description" class="textarea" rows="8" cols="80" placeholder="Enter a description" required>{{ $project->description }}</textarea>
+          </div>
+        </div>
+        
+        <button type="submit" name="button" class="button">Update a Project</button>
+      </form>
+      
+      <form action="/projects/{{ $project->id }}" method="post" style="display:inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" name="button" class="button is-danger">Delete</button>
+      </form>
     </div>
-    
-    <div class="form-group">
-      <label for="description"></label>
-      <textarea name="description" rows="8" cols="80" placeholder="Enter a description" required>
-        {{ $project->description }}
-      </textarea>
-    </div>
-    
-    <div class="form-group">
-      <button type="submit" name="button">Update a Project</button>
-    </div>
-  </form>
-  
-  <form action="{{ route('projects.update', ['project' => $project]) }}" method="post">
-    @csrf
-    @method('DELETE')
-    <button type="submit" name="button">Delete</button>
-  </form>
+    <div class="column"></div>
+  </div>
 @endsection
