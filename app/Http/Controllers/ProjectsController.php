@@ -9,60 +9,34 @@ class ProjectsController extends Controller
 {
     public function index() {
       $projects = Project::all();
-      return view('projects.index',[
-        'projects' => $projects
-      ]);
+      return view('projects.index', compact('projects'));
     }
     
-    public function show($id) {
-      $project = Project::find($id);
-      if ($project){
-        return view('projects.show', [
-          'project' => $project
-        ]);
-      } else {
-        abort(404);
-      }
+    public function show(Project $project) {
+      return view('projects.show', compact('project'));
     }
     
     public function create() {
       $project = new Project;
-      return view('projects.create',[
-        'project' => $project
-      ]);
+      return view('projects.create', compact('$project'));
     }
     
-    public function edit($id) {
-      $project = Project::find($id);
-      if ($project) {
-        return view('projects.edit',[
-          'project' => $project
-        ]);
-      } else {
-        abort(404);
-      }
+    public function store() {
+      $project = Project::create(request(['title', 'description']));
+      return redirect('/projects');
     }
     
-    public function update($id) {
-      $project = Project::find($id);
-      if ($project) {
-        $project->title = request('title');
-        $project->description = request('description');
-        $project->save();
-        return redirect('/projects');
-      } else {
-        abort(404);
-      }
-      
+    public function edit(Project $project) {
+      return view('projects.edit', compact('project'));
     }
     
-    public function destroy($id) {
-      $project = Project::find($id);
-      if ($project) {
-        $project->delete();
-        return redirect('/projects');
-      } else {
-        abort(404);
-      }
+    public function update(Project $project) {
+      $project->update(request(['title', 'description']));
+      return redirect('/projects');
+    }
+    
+    public function destroy(Project $project) {
+      $project->delete();
+      return redirect('/projects');
     }
 }
