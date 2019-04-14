@@ -13,4 +13,8 @@ class Project extends Model
     'title' => ['required','min:3'],
     'description' => ['required','min:3']
   ];
+  
+  public function tasks() {
+    return $this->hasMany(Task::class);
+  }
 }
