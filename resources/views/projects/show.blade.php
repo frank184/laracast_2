@@ -50,9 +50,9 @@
       <ul>
         @foreach($project->tasks as $task)
           <li>
-            <form action="/tasks/{{ $task->id }}" method="post">
+            <form action="/tasks/{{ $task->id }}/complete" method="post">
               @csrf
-              @method('PATCH')
+              @method($task->completed ? 'DELETE' : 'POST')
               <label for="completed">
                 <input type="checkbox" name="completed" onChange="this.form.submit()" {{ $task->completed == 1 ? 'checked' : '' }}>
                 {{ $task->title }}
