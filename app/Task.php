@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     // protected $guarded = [];
-    protected $fillable = [ 'completed' ];
+    protected $fillable = [ 'completed', 'title' ];
+    
+    public static $validation = [
+      'title' => ['required','min:3']
+    ];
     
     public function project() {
       return $this->belongsTo(Project::class);

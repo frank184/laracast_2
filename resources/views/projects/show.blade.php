@@ -3,15 +3,18 @@
 @section('title', 'Projects')
 
 @section('content')
-  <div>
-    <span class="title is-1">
-      {{ $project->title }}
-    </span>
-    
-    <a href="/projects/{{ $project->id }}/edit" class="is-pulled-right">
-      <span class="icon is-small"><i class="fas fa-fw fa-edit"></i></span>
-    </a>
-  </div>
+  <h1 class="title is-1">
+    {{ $project->title }}
+    <div class="is-pulled-right">
+      <a href="/projects/{{ $project->id }}/edit" class="button">
+        <span class="icon">
+          <i class="fas fa-fw fa-edit"></i>
+        </span>
+        &nbsp;
+        Edit Project
+      </a>
+    </div>
+  </h1>
   
   <hr>
 
@@ -19,24 +22,45 @@
     {{ $project->description }}
   </p>
   
-  <hr>
+  <form action="/projects/{{ $project->id }}/tasks" method="post">
+    @csrf
+    
+    @if ($errors->any())
+      <div class="errors">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+    
+    <div class="field has-addons">
+      <div class="control">
+        <input type="text" name="title" class="input" placeholder="Enter a Task">
+      </div>
+      <div class="control">
+        <button type="submit" name="button" class="button is-info">Create Task</button>
+      </div>
+    </div>
+  </form>
   
-  @if ($project->tasks->count())
-    <ul>
-      @foreach($project->tasks as $task)
-        <li>
-          <form action="/tasks/{{ $task->id }}" method="post">
-            @csrf
-            @method('PATCH')
-            <label for="completed">
-              <input type="checkbox" name="completed" onChange="this.form.submit()" {{ $task->completed == 1 ? 'checked' : '' }}>
-              {{ $task->title }}
-            </label>
-          </form>
-        </li>
-      @endforeach
-    </ul>
-  @endif
-  
-  
+  <div class="tasks" style="margin-top:1rem;">
+    @if ($project->tasks->count())
+      <ul>
+        @foreach($project->tasks as $task)
+          <li>
+            <form action="/tasks/{{ $task->id }}" method="post">
+              @csrf
+              @method('PATCH')
+              <label for="completed">
+                <input type="checkbox" name="completed" onChange="this.form.submit()" {{ $task->completed == 1 ? 'checked' : '' }}>
+                {{ $task->title }}
+              </label>
+            </form>
+          </li>
+        @endforeach
+      </ul>
+    @endif
+  </div>
 @endsection

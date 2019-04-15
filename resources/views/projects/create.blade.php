@@ -10,34 +10,38 @@
     </span>
   </h1>
   
+  <hr>
+  
   <div class="columns">
     <div class="column">
       <form action="/projects" method="POST">
         @csrf
         @method('POST')
         
-        @if ($errors->any())
-          <div class="errors">
-            <ul>
-              @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-          </div>
-        @endif
-        
         <div class="field">
           <label for="title" class="label">Title</label>
           <div class="control">
-            <input type="text" name="title" class="input" placeholder="Enter a title" required value="{{ old('title') }}">
+            <input type="text" name="title" placeholder="Enter a title" value="{{ old('title') }}" class="input {{ $errors->has('title') ? 'is-danger' : '' }}">
           </div>
         </div>
         
         <div class="field">
           <label for="description" class="label">Description</label>
           <div class="control">
-            <textarea name="description" class="textarea" rows="8" cols="80" placeholder="Enter a description" required>{{ old('description') }}</textarea>
+            <textarea name="description" rows="8" cols="80" placeholder="Enter a description" class="textarea {{ $errors->has('description') ? 'is-danger' : '' }}">{{ old('description') }}</textarea>
           </div>
+        </div>
+        
+        <div class="field">
+          @if ($errors->any())
+            <div class="notification is-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
         </div>
         
         <div class="field">
