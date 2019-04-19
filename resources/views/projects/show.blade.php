@@ -25,15 +25,7 @@
   <form action="/projects/{{ $project->id }}/tasks" method="post">
     @csrf
     
-    @if ($errors->any())
-      <div class="errors">
-        <ul>
-          @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
+    @include('shared.errors')
     
     <div class="field has-addons">
       <div class="control">

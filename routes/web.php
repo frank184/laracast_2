@@ -35,3 +35,6 @@ Route::post('/projects/{project}/tasks', 'TasksController@store');
 // Route::patch('/tasks/{task}', 'TasksController@update');
 Route::post('/tasks/{task}/complete', 'Tasks\CompleteController@store');
 Route::delete('/tasks/{task}/complete', 'Tasks\CompleteController@destroy');
+
+Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();

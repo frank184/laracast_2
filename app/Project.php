@@ -21,4 +21,8 @@ class Project extends Model
   public function addTask($title) {
     return $this->tasks()->create(compact('title'));
   }
+  
+  public function user() {
+    return $this->belongsTo(User::class);
+  }
 }

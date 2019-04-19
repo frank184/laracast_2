@@ -32,17 +32,7 @@
           </div>
         </div>
         
-        <div class="field">
-          @if ($errors->any())
-            <div class="notification is-danger">
-              <ul>
-                @foreach ($errors->all() as $error)
-                  <li>{{ $error }}</li>
-                @endforeach
-              </ul>
-            </div>
-          @endif
-        </div>
+        @include('shared.errors')
         
         <button type="submit" name="button" class="button">Update a Project</button>
       </form>

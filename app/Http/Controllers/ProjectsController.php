@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Project;
 
-class ProjectsController extends Controller
-{
+class ProjectsController extends AuthedController
+{    
     public function index() {
-      $projects = Project::all();
+      $user = auth()->user();
+      $projects = $user->projects;
       return view('projects.index', compact('projects'));
     }
     
     public function show(Project $project) {
+      // abort_if()
+      // abort_unless()
+      // $this->authorize('update', $project);
+      abort_unless(\Gate::allows('update', $project), 403);
       return view('projects.show', compact('project'));
     }
     
@@ -22,8 +27,9 @@ class ProjectsController extends Controller
     }
     
     public function store() {
+      $user = auth()->user();
       request()->validate(Project::$validation);
-      $project = Project::create(request(['title', 'description']));
+      $project = $user->projects->create(request(['title', 'description']));
       return redirect('/projects');
     }
     

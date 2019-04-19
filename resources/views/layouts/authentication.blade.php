@@ -25,31 +25,6 @@
             Projects
           </a>
         </div>
-
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              @guest
-                <a class="button is-info" href="{{ route('register') }}">
-                  <strong>{{ __('Register') }}</strong>
-                </a>
-                <a class="button is-light" href="{{ route('login') }}">
-                  {{ __('Login') }}
-                </a>
-              @else
-                <a class="button is-light" href="{{ route('logout') }}"
-                   onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-              @endguest
-            </div>
-          </div>
-        </div>
       </div>
     </nav>
     

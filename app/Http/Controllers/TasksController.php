@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Project;
 use App\Task;
 
-class TasksController extends Controller
+class TasksController extends AuthedController
 {
     public function store(Project $project) {
       request()->validate(Task::$validation);
